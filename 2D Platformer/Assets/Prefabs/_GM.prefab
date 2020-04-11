@@ -72,6 +72,7 @@ MonoBehaviour:
     type: 3}
   respawnAudio: {fileID: 8300000, guid: 1bd5e9854d7110d45a83e2038d26654e, type: 3}
   cameraShake: {fileID: 696461586}
+  gameOverUI: {fileID: 0}
 --- !u!82 &3222871339098599370
 AudioSource:
   m_ObjectHideFlags: 0

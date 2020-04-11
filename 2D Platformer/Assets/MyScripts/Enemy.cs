@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour
         public int damage= 40;
         public void Init() 
         {
+            
             curHealth = maxHealth;
         }
 
