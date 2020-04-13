@@ -24,7 +24,9 @@ public class Weapon : MonoBehaviour
     public float camShakeLength = 0.1f;
     CameraShake camShake;
 
-    
+    public string weaponShootSound = "DefaultShot";
+    //Caching
+    AudioManager audioManager;
 
 
     // Start is called before the first frame update
@@ -42,6 +44,12 @@ public class Weapon : MonoBehaviour
         camShake = GameMaster.gm.GetComponent<CameraShake>();
         if (camShake == null)
             Debug.LogError("No CameraShake script found on Gm object");
+        audioManager = AudioManager.instance;
+        if (audioManager == null) 
+        {
+            Debug.LogError("FREAK OUT!");
+        }
+        
     }
 
     // Update is called once per frame
@@ -128,5 +136,8 @@ public class Weapon : MonoBehaviour
 
         //shake the camera
         camShake.Shake(camShakeAmt, camShakeLength);
+
+        //play shoot sound
+        audioManager.PlaySound(weaponShootSound);
     }
 }

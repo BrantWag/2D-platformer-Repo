@@ -31,6 +31,8 @@ public class Enemy : MonoBehaviour
     public float shakeAmount = 0.1f;
     public float shakeLenght = 0.1f;
 
+    public string deathSoundName = "Explosion";
+
     [Header("Optional: ")]
     [SerializeField]
     private StatusIndicator statusIndicator;

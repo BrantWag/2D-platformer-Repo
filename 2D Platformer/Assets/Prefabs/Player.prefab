@@ -250,6 +250,8 @@ MonoBehaviour:
   stats:
     maxHealth: 100
   fallBoundry: -20
+  deathSoundName: DeathVoice
+  damageSoundName: Grunt
   statusIndicator: {fileID: 1694636014899384111}
 --- !u!1 &100004
 GameObject:
@@ -778,6 +780,11 @@ PrefabInstance:
     - target: {fileID: 721557046551407, guid: 8a8e3db72c640824285082a02dcb32da, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4994675332998896572, guid: 8a8e3db72c640824285082a02dcb32da,
+        type: 3}
+      propertyPath: fireRate
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4994675332998896572, guid: 8a8e3db72c640824285082a02dcb32da,
         type: 3}

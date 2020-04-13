@@ -25,12 +25,16 @@ public class GameMaster : MonoBehaviour
     public Transform spawnPoint;
     public float spawnDelay = 2;
     public Transform spawnPrefab;
-    public AudioClip respawnAudio;
 
-    
+    public string respawnCountdownSoundName = "RespawnCountdown";
+    public string spawnSoundName = "Spawn";
+    public string gameOverSoundName = "GameOver";
+
     public CameraShake cameraShake;
     [SerializeField]
     private GameObject gameOverUI;
+
+    private AudioManager audioManager;
 
     void Start()
     {
@@ -40,17 +44,27 @@ public class GameMaster : MonoBehaviour
         }
 
         _remainingLives = maxLives;
+
+        audioManager = AudioManager.instance;
+        if (audioManager == null) 
+        {
+            Debug.LogError("FREAK OUT! no AudioManager found in the scene.");
+        }
+
     }
     public void EndGame()
     {
+        audioManager.PlaySound(gameOverSoundName);
         Debug.Log("GAME OVER");
         gameOverUI.SetActive(true);
     }
 
     public IEnumerator _RespwanPlayer() 
     {
-        GetComponent<AudioSource>().Play();
+        audioManager.PlaySound(respawnCountdownSoundName);
+        //GetComponent<AudioSource>().Play();
         yield return new WaitForSeconds(spawnDelay);
+        audioManager.PlaySound(spawnSoundName);
         Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
         Transform clone = Instantiate(spawnPrefab, spawnPoint.position, spawnPoint.rotation) as Transform;
         Destroy(clone, 3f);
@@ -79,8 +93,14 @@ public class GameMaster : MonoBehaviour
 
     public void _KillEnemy(Enemy _enemy) 
     {
+        //lets play some sounds
+        audioManager.PlaySound(_enemy.deathSoundName);
+
+        //spawn particles
         Transform _clone = Instantiate(_enemy.deathParticles, _enemy.transform.position, Quaternion.identity) as Transform;
         Destroy(_clone, 5f);
+
+        //go camerashake
         cameraShake.Shake(_enemy.shakeAmount, _enemy.shakeLenght);
         Destroy(_enemy.gameObject);
 
