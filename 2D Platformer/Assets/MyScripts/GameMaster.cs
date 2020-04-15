@@ -13,6 +13,10 @@ public class GameMaster : MonoBehaviour
         get { return _remainingLives; }
     }
 
+    [SerializeField]
+    public int startingMoney;
+    public static int Money;
+
     void Awake()
     {
         if (gm == null) 
@@ -34,6 +38,12 @@ public class GameMaster : MonoBehaviour
     [SerializeField]
     private GameObject gameOverUI;
 
+    [SerializeField]
+    private GameObject upgradeMenu;
+
+    public delegate void UpgradeMenuCallBack(bool active);
+    public UpgradeMenuCallBack onToggleUpgradeMenu;
+
     private AudioManager audioManager;
 
     void Start()
@@ -44,6 +54,7 @@ public class GameMaster : MonoBehaviour
         }
 
         _remainingLives = maxLives;
+        Money = startingMoney;
 
         audioManager = AudioManager.instance;
         if (audioManager == null) 
@@ -51,6 +62,20 @@ public class GameMaster : MonoBehaviour
             Debug.LogError("FREAK OUT! no AudioManager found in the scene.");
         }
 
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.U)) 
+        {
+            ToggleUpgradeMenu();
+        }
+    }
+
+    private void ToggleUpgradeMenu() 
+    {
+        upgradeMenu.SetActive(!upgradeMenu.activeSelf);
+        onToggleUpgradeMenu.Invoke(upgradeMenu.activeSelf);
     }
     public void EndGame()
     {

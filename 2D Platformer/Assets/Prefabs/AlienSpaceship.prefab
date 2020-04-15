@@ -190,6 +190,7 @@ MonoBehaviour:
     type: 3}
   shakeAmount: 0.1
   shakeLenght: 0.1
+  deathSoundName: Explosion
   statusIndicator: {fileID: 5212826414061432159}
 --- !u!114 &-8138480153635121408
 MonoBehaviour:

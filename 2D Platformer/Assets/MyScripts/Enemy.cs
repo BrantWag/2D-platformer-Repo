@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(EnemyFollow))]
+[RequireComponent(typeof(EnemyAI))]
 public class Enemy : MonoBehaviour
 {
     [System.Serializable]
@@ -44,10 +46,18 @@ public class Enemy : MonoBehaviour
         {
             statusIndicator.SetHealth(stats.curHealth, stats.maxHealth);
         }
+
+        GameMaster.gm.onToggleUpgradeMenu += OnUpgradeMenuToggle;
         if (deathParticles == null) 
         {
             Debug.Log("no death particles refferanced on Enemy");
         }
+    }
+    void OnUpgradeMenuToggle(bool active)
+    {
+        GetComponent<EnemyFollow>().enabled = !active;
+        GetComponent<EnemyAI>().enabled = !active;
+
     }
 
     public void DamageEnemy(int damage)
@@ -71,5 +81,10 @@ public class Enemy : MonoBehaviour
             _player.DamagePlayer(stats.damage);
             DamageEnemy(999999999);
         }
+    }
+
+    void OnDestroy()
+    {
+        GameMaster.gm.onToggleUpgradeMenu -= OnUpgradeMenuToggle;
     }
 }

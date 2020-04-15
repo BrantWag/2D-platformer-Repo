@@ -14,7 +14,15 @@ public class EnemyFollow : MonoBehaviour
     void Start()
     {
         target = tar.GetComponent<Transform>();
+        GameMaster.gm.onToggleUpgradeMenu += OnUpgradeMenuToggle;
+
+        
     }
+    void OnUpgradeMenuToggle(bool active)
+        {
+            GetComponent<EnemyFollow>().enabled = !active;
+            
+        }
 
     // Update is called once per frame
     void Update()
@@ -24,6 +32,11 @@ public class EnemyFollow : MonoBehaviour
             transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
             //RotateTowards(target.position);
         }
+    }
+
+    void OnDestroy()
+    {
+        GameMaster.gm.onToggleUpgradeMenu -= OnUpgradeMenuToggle;
     }
 
     //private void RotateTowards(Vector2 target)
